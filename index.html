@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon"
+    href="https://web-dev.imgix.net/image/vS06HQ1YTsbMKSFTIPl2iogUQP73/KAOmqplghJT2PrJlOgZ5.png?auto=format"
+    type="image/x-icon">
+  <title>Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: rgba(149, 150, 92, 0.609);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game {
+  width: 375px;
+  margin: 0 auto;
+  border: 2px solid white;
+  background: #000;
+  box-shadow: 1px 1px 10px gold;
+}
+
+.info {
+  display: flex;
+  background: black;
+  height: 100px;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: white;
+  width: 50%;
+}
+
+.score-table {
+  background: #0f0;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.score {
+  text-align: center;
+}
+
+.color {
+  height: 100px;
+  background: rgba(33, 156, 2, 0.511);
+  text-align: center;
+  line-height: 100px;
+  color: white;
+  font-size: 50px;
+}
+
+.colors {
+  display: flex;
+  margin: 50px auto;
+  flex-wrap: wrap;
+  width: 310px;
+  gap: 5px;
+
+}
+
+.guess {
+  background: gray;
+  width: 100px;
+  height: 100px;
+}
+
+</style>
+<body>
+
+
+
+  <div class="game">
+    <div class="info">
+      <h1 class="task">Знайди колір</h1>
+      <div class="score-table">
+        <h1 class="score-title">Рахунок</h1>
+        <h1 class="score" id="count">0</h1>
+      </div>
+    </div>
+    <h2 class="color" id="color"></h2>
+    <div class="colors">
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+      <div class="guess"></div>
+    </div>
+  </div>
+
+
+ <script>
+    let count = 0 // рахунок
+let counter = 0 // натискання
+let score = document.getElementById("count")
+let color = document.getElementById("color")
+let colors = document.querySelectorAll(".guess")
+let backgrounds = [
+  "forestgreen",
+  "olivedrab",
+  "turquoise",
+  "steelblue",
+  "darkviolet",
+  "indigo",
+  "slategray",
+  "goldenrod",
+  "maroon",
+  "tomato",
+  "crimson",
+  "khaki"
+]
+// перемішуємо кольори
+function shuffle(){
+let x = 0; let xNumber
+for (let i = 0; i < 24; i++) {
+xNumber = Math.round(Math.random()*11)
+x = backgrounds.splice(xNumber,1)
+backgrounds.push(x[0])
+}
+}
+
+// вибираємо колір
+let random = Math.round(Math.random()*11)
+color.innerText = backgrounds[random]
+
+// заливаємо кольорами
+shuffle() // перемішали
+
+for (let i = 0; i < 12; i++) {
+  colors[i].addEventListener("click", check)
+}
+
+function setColors(){
+  for (let i = 0; i < 12; i++) {
+    colors[i].style.background = backgrounds[i]
+  }
+}
+
+setColors()
+
+
+function check(){
+  counter ++
+  console.log(counter)
+
+  // завантажуємо інший раунд
+  shuffle() // перемішали
+  setColors()
+
+  // вибираємо колір
+  let random = Math.round(Math.random()*11)
+  color.innerText = backgrounds[random]
+
+  if (this.style.background === color.innerText) {
+    score.innerText = count
+    count ++
+    
+  }
+else {
+    score.innerText = count
+  count --
+  
+  
+}
+if(counter === 12){
+alert(count)
+location.reload()
+}
+
+}
+ </script>
+</body>
